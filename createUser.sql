@@ -346,6 +346,37 @@ USE QLBongDa
 GO
 CREATE VIEW vCau7
 AS 
-		SELECT
+		SELECT HLV.TENHLV
+		FROM  HLV_CLB hlvclb
+		      INNER JOIN HUANLUYENVIEN HLV ON hlvclb.MAHLV=HLV.MAHLV
+			  INNER JOIN CAULACBO CLB ON CLB.MACLB=hlvclb.MACLB
+		WHERE HLV.DIACHI IS NULL AND hlvclb.VAITRO IS NOT NULL
+GO
+
+
+--8 Liệt kê các huấn luyện viên thuộc quốc gia Việt Nam chưa làm công tác huấn
+--luyện tại bất kỳ một câu lạc bộ nào.
+
+USE QLBongDa
+GO
+CREATE VIEW vCau8
+AS
+		SELECT HLV.*
 		FROM HUANLUYENVIEN HLV
-		WHERE 
+			 INNER JOIN QUOCGIA QG ON QG.MAQG=HLV.MAQG
+		WHERE NOT EXISTS (
+						  SELECT *
+						  FROM HLV_CLB
+						  WHERE HLV_CLB.MAHLV = HLV.MAHLV)
+        AND QG.TENQG LIKE 'Việt Nam'
+
+		
+GO
+
+
+--9 Cho biết danh sách các trận đấu (NGAYTD, TENSAN, TENCLB1, TENCLB2,
+--KETQUA) của câu lạc bộ CLB đang xếp hạng cao nhất tính đến hết vòng 3 năm
+--2009.
+
+
+
