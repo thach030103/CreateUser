@@ -1,4 +1,4 @@
-﻿
+﻿----------------------------------------------------BMCSDL -LAB 02 - NHOM 10---------------------------------------
 
 
 -- 1. USER BDAdmin Được toàn quyền trên CSDL QLBongDa:
@@ -186,10 +186,10 @@ GO
 
 
 
---e Tạo stored procedure với yêu cầu cho biết mã số, họ tên, ngày sinh, địa chỉ và vị trí
---của các cầu thủ thuộc đội bóng “SHB Đà Nẵng” và tên quốc tịch = “Brazil”, trong
---đó tên đội bóng/câu lạc bộ và tên quốc tịch/quốc gia là 2 tham số của stored procedure.
---i) Tên stored procedure: SP_SEL_NO_ENCRYPT
+--e) Tạo stored procedure với yêu cầu cho biết mã số, họ tên, ngày sinh, địa chỉ và vị trí 
+--của các cầu thủ thuộc đội bóng “SHB Đà Nẵng” và tên quốc tịch = “Brazil”, trong đó 
+tên đội bóng/câu lạc bộ và tên quốc tịch/quốc gia là 2 tham số của stored procedure.
+
 
 USE QLBongDa
 GO
@@ -218,6 +218,7 @@ BEGIN
 	WHERE CLB.TENCLB=@TENCLB AND QG.TENQG=@TENQG
 END
 
+
 --g)  Thực thi 2 stored procedure trên với tham số truyền vào 
 --@TenCLB = “SHB Đà Nẵng” ,@TenQG = “Brazil”,
 GO
@@ -233,6 +234,8 @@ GO
 
 --h) Giả sử trong CSDL có 100 stored procedure, có cách nào để Encrypt toàn bộ 100 stored
 --procedure trước khi cài đặt cho khách hàng không? Nếu có, hãy mô tả các bước thực hiện.
+
+
 
 
 
@@ -306,6 +309,7 @@ GO
 
 --5. Cho biết tên tỉnh, số lượng cầu thủ đang thi đấu ở vị trí tiền đạo
 --trong các câu lạc bộ thuộc địa bàn tỉnh đó quản lý.
+
 USE QLBongDa
 GO
 CREATE VIEW vCau5
