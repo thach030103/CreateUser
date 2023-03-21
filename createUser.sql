@@ -280,12 +280,12 @@ USE QLBongDa
 GO
 CREATE VIEW vCau3
 AS  
-	SELECT HLV.MAHLV, HLV.TENHLV,HLV.NGAYSINH,HLV.DIACHI, hlvclb.VAITRO, CLB.TENCLB
-	FROM HUANLUYENVIEN HLV, CAULACBO CLB, QUOCGIA QG,HLV_CLB hlvclb	
-	WHERE HLV.MAQG=QG.MAQG
-		   AND hlvclb.MAHLV=HLV.MAHLV 
-		   AND hlvclb.MACLB=CLB.MACLB
-	       AND QG.TENQG like N'Việt Nam'
+	SELECT HLV.MAHLV, HLV.TENHLV, HLV.NGAYSINH, HLV.DIACHI, HLV_CLB.VAITRO, CAULACBO.TENCLB 
+        FROM HUANLUYENVIEN HLV 
+                          JOIN HLV_CLB hlvclb ON HLV.MAHLV = hlvclb.MAHLV 
+                          JOIN CAULACBO CLB ON hlvclb.MACLB = CLB.MACLB 
+                          JOIN QUOCGIA QG ON HLV.MAQG = QG.MAQG 
+	WHERE QG.TENQG LIKE N'Việt Nam'
 GO
 
 
@@ -378,6 +378,16 @@ GO
 --9 Cho biết danh sách các trận đấu (NGAYTD, TENSAN, TENCLB1, TENCLB2,
 --KETQUA) của câu lạc bộ CLB đang xếp hạng cao nhất tính đến hết vòng 3 năm
 --2009.
+
+create view vCAU9 as
+select NGAYTD, TENSAN,clb1.TENCLB as TENCLB1,clb2.TENCLB as TENCLB2,KETQUA, TRANDAU.VONG
+from TRANDAU join CAULACBO as clb1 on TRANDAU.MACLB1=clb1.MACLB
+				join CAULACBO as clb2 on TRANDAU.MACLB2=clb2.MACLB
+					join BANGXH on clb1.MACLB=BANGXH.MACLB or clb2.MACLB=BANGXH.MACLB
+						join SANVD on SANVD.MASAN=TRANDAU.MASAN
+where TRANDAU.VONG<=3 and (clb1.MACLB=(select MACLB from BANGXH where HANG='1' and VONG='3' and NAM = 2009) 
+		or clb2.MACLB=(select MACLB from BANGXH where HANG='1' and VONG='3' and NAM = 2009))
+group by NGAYTD, TENSAN,clb1.TENCLB,clb2.TENCLB ,KETQUA, TRANDAU.VONG
 
 
 
